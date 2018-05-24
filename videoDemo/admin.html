@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>canvas--video</title>
+</head>
+<body>
+<canvas width="1000" height="300" id="mycanvas">您的破浏览器不支持该属性 	</canvas>
+<video controls id="video">	<source src="./movie.webm" type="video/webm">您的破浏览器不支持该属性 </video>
+<script type="text/javascript">
+
+window.onload = function(){ 
+
+	var mycanvas = document.getElementById('mycanvas');
+	var cxt = mycanvas.getContext('2d');
+	var video = document.getElementById('video');
+		window.requestAnimationFrame(animate);//chrome
+		function animate(){ 
+			if(!video.ended){ 
+				cxt.drawImage(video,0,0,mycanvas.width,mycanvas.height);
+				window.requestAnimationFrame(animate);//chrome
+			}				
+		}
+		mycanvas.onclick= function (){ 
+			console.log(this);
+				var img = this.toDataURL();
+				var newwin=window.open() 
+				newwin.document.write("<img src="+img+" />") 
+				var formData = new FormData();
+				formData.append('data',img);
+			}
+}
+</script>
+
+</body>
+</html>
