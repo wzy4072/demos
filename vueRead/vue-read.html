@@ -1,31 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>vue read</title>
-	<script src="vue.2.5.16.js" type="text/javascript" charset="utf-8" ></script>
+  <title>vue read</title>
+  <script src="vue.2.5.16.js" type="text/javascript" charset="utf-8"></script>
 </head>
+
 <body>
 
-<div id="app">
-	
-	
-</div>
-<div id="mount-point"></div>
-	<script>
+  <div id="app">
 
-	var Profile = Vue.extend({
-  template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
-  data: function () {
-    return {
-      firstName: 'Walter',
-      lastName: 'White',
-      alias: 'Heisenberg'
+
+  </div>
+  <div id="mount-point"></div>
+  <script>
+    var Profile = Vue.extend({
+      template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
+      data: function () {
+        return {
+          firstName: 'Walter',
+          lastName: 'White',
+          alias: 'Heisenberg'
+        }
+      }
+    })
+    Vue.component('my-component', Profile)
+    Vue.component('my-component')
+
+    function extend(to, _from) {
+    for (var key in _from) {
+      to[key] = _from[key];
     }
+    return to
   }
-})
-Vue.component('my-component', Profile)
-Vue.component('my-component')
 
-	</script>
+  /**
+   * Merge an Array of Objects into a single Object.
+   */
+  function toObject(arr) {
+    var res = {};
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i]) {
+        extend(res, arr[i]);
+      }
+    }
+    return res
+  }
+
+  var c = toObject([{name:1,age:3},{name:2,time:4}])
+  </script>
 </body>
+
 </html>
