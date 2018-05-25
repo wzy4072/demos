@@ -483,6 +483,7 @@
 
   /**
    * Check if a string starts with $ or _
+   * 为什么不适用十进制判断 $ 36 _ 95  //笔记
    */
   function isReserved(str) {
     var c = (str + '').charCodeAt(0);

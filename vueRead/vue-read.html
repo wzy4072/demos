@@ -26,28 +26,11 @@
     })
     Vue.component('my-component', Profile)
     Vue.component('my-component')
-
-    function extend(to, _from) {
-    for (var key in _from) {
-      to[key] = _from[key];
-    }
-    return to
+    function isReserved(str) {
+    var c = (str + '').charCodeAt(0);
+    return c === 0x24 || c === 0x5F
   }
-
-  /**
-   * Merge an Array of Objects into a single Object.
-   */
-  function toObject(arr) {
-    var res = {};
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i]) {
-        extend(res, arr[i]);
-      }
-    }
-    return res
-  }
-
-  var c = toObject([{name:1,age:3},{name:2,time:4}])
+  isReserved('_s')
   </script>
 </body>
 
