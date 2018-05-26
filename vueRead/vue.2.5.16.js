@@ -11,7 +11,7 @@
   'use strict';
 
   /*  */
-  // 冻结空对象
+
   var emptyObject = Object.freeze({});
 
   // these helpers produces better vm code in JS engines due to their
@@ -85,7 +85,6 @@
 
   /**
    * Convert a value to a string that is actually rendered.
-   * JSON.stringify(val, null, 2) //笔记
    */
   function toString(val) {
     return val == null ?
@@ -159,9 +158,6 @@
 
   /**
    * Create a cached version of a pure function.
-   *  高级闭包 //总结
-   *  这样做，内存中会存在三个cachedFn,为什么要这么做
-   * 有点绕 没看太懂
    */
   function cached(fn) {
     var cache = Object.create(null);
@@ -173,9 +169,6 @@
 
   /**
    * Camelize a hyphen-delimited string.
-   * a 匹配到的元素，b匹配到元素的位置（从0开始）
-   * replace(regexp,func(a,b){return ''}) //总结
-   * my-tag -> MyTag
    */
   var camelizeRE = /-(\w)/g;
   var camelize = cached(function (str) {
@@ -186,7 +179,6 @@
 
   /**
    * Capitalize a string.
-   * 首字母大写
    */
   var capitalize = cached(function (str) {
     return str.charAt(0).toUpperCase() + str.slice(1)
@@ -194,7 +186,6 @@
 
   /**
    * Hyphenate a camelCase string.
-   * MyTag -> my-tag
    */
   var hyphenateRE = /\B([A-Z])/g;
   var hyphenate = cached(function (str) {
@@ -234,7 +225,6 @@
 
   /**
    * Convert an Array-like object to a real Array.
-   * 类数组转数组 比如arguments这个怪癖
    */
   function toArray(list, start) {
     start = start || 0;
@@ -248,7 +238,6 @@
 
   /**
    * Mix properties into target object.
-   * 对象浅拷贝，覆盖式
    */
   function extend(to, _from) {
     for (var key in _from) {
@@ -259,7 +248,6 @@
 
   /**
    * Merge an Array of Objects into a single Object.
-   * [{name:1,age:3},{name:2,time:4}] => {age:3,name:2,time:4}
    */
   function toObject(arr) {
     var res = {};
@@ -483,7 +471,6 @@
 
   /**
    * Check if a string starts with $ or _
-   * 为什么不适用十进制判断 $ 36 _ 95  //笔记
    */
   function isReserved(str) {
     var c = (str + '').charCodeAt(0);
@@ -4925,8 +4912,6 @@
     /**
      * Class inheritance
      * extendOptions 组件选项对象，比如 template,data(函数)
-     * 创建好的构造器可以通过 mount 方法挂在到对象
-     * 也可以作为参数注册到全局或局部组件
      */
     Vue.extend = function (extendOptions) {
       extendOptions = extendOptions || {};
@@ -5011,21 +4996,7 @@
   function initAssetRegisters(Vue) {
     /**
      * Create asset registration methods.
-     * 
-     *type="directive" 指令
-     * Vue.directive('myfocus', {  inserted: function (el) {    el.focus()  }}) //注册
-     * <input v-myfocus> //使用
-     * var myDirective = Vue.directive('my-directive')  //获取
-     *  
-     * type="filter" 过滤
-     * Vue.filter('my-filter', function (value) { })        //注册
-     * var myFilter = Vue.filter('my-filter')               //获取
-     * 
-     * type ='component' 组件 
-     * Vue.component('my-component', Vue.extend({ }))       //注册
-     * Vue.component('my-component', {  })                  //注册
-     * var MyComponent = Vue.component('my-component')      //获取
-     *
+     * 除了v-on v-bind 等，可以自定义指令，在全局注册或者在组件内，局部注册
      */
     ASSET_TYPES.forEach(function (type) {
       Vue[type] = function (
