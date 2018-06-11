@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)http://www.jq22.com/demo/jQueryQianzi201703220042/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+     <script src="./jquery.min.js"></script>
+    <script src="./WritingPad.js"></script>
+  
+</head>
+<body>
+
+
+ 
+            
+                   
+             
+                   <div  id="mySignature"></div>                        
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="myEmpty">清空面板</button>             
+                        <button type="button" class="btn btn-primary" id="mySave">保存</button>
+                        <div id="myImg"></div>
+                    </div>
+       
+   
+
+
+
+    <script>
+
+     $(function () {
+        initSignature();     
+       
+        $(document).on("click", "#mySave", null, function () {
+            
+            var myImg = $('#myImg').empty();
+            var dataUrl = $('#mySignature').jqSignature('getDataURL');    
+            console.log(dataUrl);
+            var img = $('<img>').attr('src', dataUrl);
+            $(myImg).append($('<p>').text("图片保存在这里"));
+            $(myImg).append(img);
+        });
+
+        $(document).on("click", "#myEmpty", null, function () {
+            $('#mySignature').jqSignature('clearCanvas');
+
+        });
+    });
+
+ 
+
+    
+
+    function initSignature() {
+        //debugger;
+        if (window.requestAnimFrame) {
+          $("#mySignature").jqSignature({ width: "300", height: "100", border: '1px solid #ccc', background: '#eee', lineColor: '#333', lineWidth: 1, autoFit: true });
+           } else {
+            alert("请加载jq-signature.js");
+            return;
+        }
+    }
+
+    </script>
+ </body></html>
