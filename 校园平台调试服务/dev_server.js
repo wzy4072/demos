@@ -12,6 +12,7 @@ let baseSet = {
   serverPort: 8090, // 无限制
   serverHost: '192.168.1.183', // 无限制
   defaultHomPage: 'main.html',
+  serverStatic: [] // 服务端静态文件位置
 }
 //======================================================================================//
 // 使用：该文件目录下 打开命令窗口 执行> node dev_server.js 即可
@@ -19,15 +20,16 @@ let baseSet = {
 // 最新修改日期：20190118
 //======================================================================================//
 
+
 var server = http.createServer(function (brReq, brRes) {
   var brResBody = ''
   brReq.on("data", function (data) { brResBody += data })
   brReq.on('end', function () {
-    // 根据请求数据格式来判断是否是接口请求，需要完善！！！
-    if (brReq.headers.accept && brReq.headers.accept.indexOf('application/json') != -1) {
+    // 肯定是ajax call api // 否则 先按照静态文件查找 如果404 再 call api
+    if (brReq.headers['x-requested-with'] == "XMLHttpRequest") {
       corsRequest(brReq, brRes, brResBody)
     } else {
-      staticRoot(brReq, brRes)
+      staticRoot(brReq, brRes, brResBody)
     }
   });
 })
@@ -45,10 +47,12 @@ function corsRequest(preq, pres, pbody) {
   delete requestHaders.connection
   delete requestHaders['content-length']
   delete requestHaders.host
+  let path = checkPath(preq)
+  console.log(path)
   var options = {
     host: baseSet.apiHost,
     port: baseSet.apiPort,
-    path: checkPath(preq),
+    path: path,
     method: preq.method,
     headers: requestHaders
   };
@@ -66,7 +70,7 @@ function corsRequest(preq, pres, pbody) {
     });
   });
   req.on('error', (e) => { console.log(`请求错误: ${e.message}`); });
-  req.write(pbody);
+  pbody && (req.write(pbody))
   req.end();
 }
 
@@ -75,12 +79,13 @@ function corsRequest(preq, pres, pbody) {
  * @param {*} req 
  * @param {*} res 
  */
-function staticRoot(req, res) {
-  var filePath = path.join(baseSet.staticDirPathName, checkPath(req))
+function staticRoot(req, res, brResBody) {
+  let relativePath = checkPath(req)
+  var filePath = null
+  filePath = path.join(baseSet.staticDirPathName, relativePath)
   fs.readFile(filePath, 'binary', function (err, fileContent) {
     if (err) {
-      res.writeHead(404, 'not Found')
-      res.end('<h1>Not Found!</h1>')
+      corsRequest(req, res, brResBody)
     } else {
       res.writeHead(200, 'okay')
       res.write(fileContent, 'binary')
