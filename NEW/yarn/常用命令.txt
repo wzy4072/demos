@@ -1,0 +1,24 @@
+使用
+// https://yarnpkg.com/zh-Hans/docs/usage
+
+初始化新项目
+
+yarn init
+
+
+添加依赖包
+
+yarn add [package]
+
+
+将依赖项添加到不同依赖项类别
+
+yarn add [package] --dev
+yarn add [package] --peer
+yarn add [package] --optional
+
+
+安装项目的全部依赖
+
+yarn
+yarn install

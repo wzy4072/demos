@@ -1,0 +1,12 @@
+yarn的安装 
+// https://yarnpkg.com/zh-Hans/docs/install#windows-stable
+
+
+
+第一步：安装window系统的包管理工具Chocolatey
+// https://chocolatey.org/install#installing-chocolatey
+
+管理员身份CMD执行以下命令即可
+@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+
+第二步：choco install yarn
