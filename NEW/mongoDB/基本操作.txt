@@ -1,0 +1,82 @@
+启动数据库（窗口1）
+
+D:\Program Files\mongodb\bin\ mongod --dbpath d:\data\db
+
+连接（窗口2）
+C:\mongodb\bin\mongo.exe
+
+安装 MongoDB服务
+C:\mongodb\bin\mongod.exe --config "C:\mongodb\mongod.cfg" --install
+
+
+
+
+启动服务
+net start MongoDB
+
+关闭服务
+net stop MongoDB
+
+移除 MongoDB 服务
+C:\mongodb\bin\mongod.exe --remove
+
+
+懒人设置（省去多窗口）将MongoDB服务器作为Windows服务运行
+
+像上面那样启动mongodb，发现没办法输入命令行了，这是可以采用打开多个窗口来连接，但这样就太麻烦了，解决办法就是将MongoDB服务器作为Windows服务运行。
+输入以下命令：
+D:\Program Files\mongodb\bin>
+	mongod --dbpath "d:\data\db" --logpath "d:\data\log\mongodb.log" --serviceName "mongodb" --serviceDisplayName "mongodb" --install
+
+
+
+
+
+参数	描述
+--bind_ip	绑定服务IP，若绑定127.0.0.1，则只能本机访问，不指定默认本地所有IP
+--logpath	定MongoDB日志文件，注意是指定文件不是目录
+--logappend	使用追加的方式写日志
+--dbpath	指定数据库路径
+--port	指定服务端口号，默认端口27017
+--serviceName	指定服务名称
+--serviceDisplayName	指定服务名称，有多个mongodb服务时执行。
+--install	指定作为一个Windows服务安装。
+
+
+
+
+
+
+show databases
+show dbs
+
+// 创建数据库
+use mydb
+
+// 删除数据库
+use mydb
+db.dropDatabase()
+
+// 查看当前位置
+db
+
+db.mongo.insert({"name":"mongodb中文网"})
+
+删除集合
+db.collection.drop()  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
